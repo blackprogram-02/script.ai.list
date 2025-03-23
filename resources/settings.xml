@@ -1,0 +1,32 @@
+<settings>
+    <!-- List Management -->
+    <category label="List Settings">
+        <setting id="List_Editor" type="action" label="Open List Editor" 
+                 action="RunScript(script.ai.list, editor)" 
+                 desc="Open the editor to manage your custom lists. You can create, edit, or delete lists." />
+        <setting id="timer_interval" type="number" label="List Update Frequency (hours)" 
+                 default="24" 
+                 desc="Set how often the lists should be updated automatically (in hours). For example, enter '24' to update once a day." />
+        <setting type="lsep" label="" />
+        <setting id="Update_All_Lists" type="action" label="Update All Lists" 
+                 action="RunScript(script.ai.list, update_all_lists)" 
+                 desc="Manually update all lists immediately. This will fetch the latest data for all your lists." />
+    </category>
+
+    <!-- Account Settings -->
+    <category label="Account Settings">
+        <setting id="link_trakt_account" type="action" label="Link Trakt Account" 
+                 action="RunScript(script.ai.list, link_trakt_account)" 
+                 desc="Link your Trakt account to sync your watch history and lists with Trakt." />
+        <setting id="link_tmdb_account" type="action" label="Link TMDB Account" 
+                 action="RunScript(script.ai.list, link_tmdb_account)" 
+                 desc="Link your TMDB account to access personalized recommendations and manage your TMDB lists." />
+        <setting id="gemini_api_key" type="text" label="Gemini API Key" 
+                 default="" 
+                 desc="Enter your Gemini API key to enable AI-powered recommendations for your lists." />
+        <setting type="lsep" label="" />
+        <setting id="sync_trakt_account" type="action" label="Force Sync Trakt Data" 
+                 action="RunScript(script.ai.list, sync_trakt_account)" 
+                 desc="Manually sync your Trakt account data, including watch history and watchlist." />
+    </category>
+</settings>
