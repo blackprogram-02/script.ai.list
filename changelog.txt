@@ -1,1 +1,2 @@
+1.0.3 Fixed Issue with removing module
 1.0.2 Initial Release

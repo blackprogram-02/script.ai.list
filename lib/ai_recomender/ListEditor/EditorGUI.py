@@ -236,13 +236,13 @@ class EditorGUI:
                     if selected_media_type != -1:
                         module_data['media_type'] = media_type_options[selected_media_type]
                         log(f"Updated 'media_type' for module '{module_name}' to: {module_data['media_type']}", xbmc.LOGINFO)
-                elif selected_module_option == 2:  # Random
+                elif selected_module_option == 3:  # Random
                     random_options = ["True", "False"]
                     selected_random = xbmcgui.Dialog().select("Select Random", random_options)
                     if selected_random != -1:
                         module_data['random'] = selected_random == 0
                         log(f"Updated 'random' for module '{module_name}' to: {module_data['random']}", xbmc.LOGINFO)
-                elif selected_module_option == 3:  # Remove Module
+                elif selected_module_option == 2:  # Remove Module
                     if xbmcgui.Dialog().yesno("Confirm Remove", f"Are you sure you want to remove the module '{module_name}'?"):
                         del attached_data[module_name]
                         self.list_handler.save_lists()
