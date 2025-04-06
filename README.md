@@ -17,7 +17,7 @@ Whether you're a casual viewer or a media enthisiast, this addon enhances your d
 # Installation Guide
 
 ### **Installation Sources**
-- *Kodi File Manager Source:* https://blackprogram-02.github.io/repository.blackprogram
+- **Kodi File Manager Source:** https://blackprogram-02.github.io/repository.blackprogram
 - **Direct ZIP Install:** https://github.com/blackprogram-02/script.ai.list/archive/refs/heads/main.zip
 
 # 🔧 How to Use
