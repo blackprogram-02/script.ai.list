@@ -1,84 +1,77 @@
 
-# AI Curator Addon
+# 🎬 AI List Curator Addon for Kodi
 
-Uses Gemini to manage personalized TMDB lists based on user trakt data.
+**Harness the power of Gemini AI to build and manage personalized TMDB lists using your Trakt data.**
 
-This addon allows users to link their Trakt and TMDB accounts to manage custom lists. With the power of Gemini AI, it provides personalized recommendations and automates list updates based on user preferences. Ideal for users looking to enhance their media organization and discovery experience
+This addon links your Trakt and TMDB accounts to create and manage TMDB lists using an Gemini AI, it offers smart, personalozed recommendations and automatic list updates based on your viewing history and preferences.
+
+Whether you're a casual viewer or a media enthisiast, this addon enhances your dicovery experience.
+
+# 🚀 Features
+- Seamless integration with **Trakt** and **TMDB**
+- AI-powered list generation using **Gemini**
+- Auto updates to your lists
+- Smart prompts for highly personalized content.
+- Controle what data is used to generate the lists.
 
 # Installation Guide
 
-Ensure you install from my repository to get the latest updates.
-
-## Kodi Installation
-
 ### **Installation Sources**
-- **Kodi File Manager Source:** [Insert your link here]
-- **Direct ZIP Install:** [Insert your link here]
+- **Direct ZIP Install:** [\[Zip\]](https://github.com/blackprogram-02/script.ai.list/archive/refs/heads/main.zip)
 
-### **Installation Instructions**
-
-1. **Enable Unknown Sources**
-   - Go to **Kodi Settings** > **System** > **Add-ons**
-   - Enable **Unknown Sources**
-
-2. **Enable Add-on Updates from Any Repository**
-   - Navigate to **Kodi Settings** > **System** > **Add-ons**
-   - Enable **Update official add-ons from: Any repositories**
-
-3. **Install My Repository**
-   - Use either the **ZIP file** or **File Manager Source** linked above
-
-4. **Install the Latest Version**
-   - Locate the add-on in **My Repository** and install the latest version
+# 🔧 How to Use
 
 
-# How to Use
+### 1. 🔐 Linking Your Accounts
+- Go to **Account Settings**
+- Link your **Trakt Account** and **TMDB Account**
+- Enter your **Gemini API Key**
+
+### 2. 📝 Creating Custom Lists
+- Navigate to **List Settings** -> **Open List Editor** 
+- create and manage your lists.
+
+### List Editor Options:
+- **Enabled:** Toggle list updates
+
+- **List Name:** AI may rename it during updates for better fit
+
+- **List Type:**
+   - Combined (Movies + TV)
+   - Movie only
+   - TV Show only
+
+- **Description:** Brief explanation of the list's theme
+- **List Length:** Number of items (e.g. 5, 10)
+
+### 3. 📊 Attach User Data
+
+Customize what Trakt data is sent to the AI:
+
+- **Watch History**
+   - **Item Count:** How many items to include
+   - **Media Type:**
+      - Combined
+      - Movie only
+      - TV Show only
 
 
-### Linking Your Accounts
-1. Go to **Account Settings**
-2. Link your **Trakt Account** and **TMDB Account**
-3. Enter your **Gemini API Key**
+# 🤖 AI Configuration
 
-### Creating Custom Lists
-Navigate to **List Settings** -> **Open List Editor** to create and manage your lists.
+**AI Provider**
+- Currenlty supports **Gemini AI** only
 
-### Understanding the List Editor
+**Prompt Ideas / Exsample**
 
-#### Start by
-Editing an existing list or create a new one.
+Use natural language prompts to guide the AI:
+   ```
+   🧠 “Pick a random item from my history and build a list that matches its vibe.”
+   🎬 “Use my top genre and suggest 5 hidden gems I haven’t seen yet.”
+   ```
 
-#### Edit List Settings
-- **Enabled**: Enable or disable list updates.
-- **List Name**: Suggested list name for the AI (AI may rename it during updates, to have it fit the list better).
-- **List Type**:
-  - **Combined**: Includes both movies and TV shows.
-  - **Movie**: Movies only.
-  - **TV Show**: TV shows only.
-- **List Description**: Description of the list.
-- **List Length**: Number of items in the list (e.g., `5` for five items).
+**Be creative** — the AI adapts to your preferences!
 
-#### Attached Data
-Modules allowing users to configure what Trakt user data will be sent to the AI.
-- **Watch History**:
-  - **Item Count**: Number of items being attached to the generation.
-  - **Media Type**:
-    - **Combined**: Includes both movie and TV show watch history.
-    - **Movie**: Movie history only.
-    - **TV Show**: TV show history only.
-
-#### AI Provider
-- Currently there is only supports for **Gemini**.
-
-#### AI Prompt
-Describe the type of list the AI should generate.
-Example prompts:
-  - *Pick a random item from my history and create a list based on its vibe.*
-  - *Take the user's most-watched genre and create a list based on that genre.*
-
-  You can be as creative as you like! Think of this field as a prompt for the AI.
-
-## Requirements
+## 📋 Requirements
 
 To use this add-on, you will need the following:
 
