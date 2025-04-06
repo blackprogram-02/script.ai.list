@@ -73,20 +73,20 @@ lock_file = os.path.join(addon_path, "update.lock")
 def update_all_lists():
     """Update all lists."""
     if not trakt_token:
-        xbmcgui.Dialog().notification(addonname, "Trakt account not linked. Please link your Trakt account first.", xbmcgui.NOTIFICATION_ERROR)
+        xbmcgui.Dialog().notification(addonname, "Trakt account not linked. Please link your Trakt account first.", xbmcgui.NOTIFICATION_INFO)
         log("Failed to update lists: Trakt account not linked.", xbmc.LOGERROR)
         return
 
     # Check if TMDB account is linked
     if not tmdb_token:
-        xbmcgui.Dialog().notification(addonname, "TMDB account not linked. Please link your TMDB account first.", xbmcgui.NOTIFICATION_ERROR)
+        xbmcgui.Dialog().notification(addonname, "TMDB account not linked. Please link your TMDB account first.", xbmcgui.NOTIFICATION_INFO)
         log("Failed to update lists: TMDB account not linked.", xbmc.LOGERROR)
         return
 
     # Validate Gemini API key
     gemini_provider = GeminiProvider()  # Initialize the provider
     if not gemini_provider.validate_api_key():
-        xbmcgui.Dialog().notification(addonname, "Invalid Gemini API key. Please check your settings.", xbmcgui.NOTIFICATION_ERROR)
+        xbmcgui.Dialog().notification(addonname, "Invalid Gemini API key. Please check your settings.", xbmcgui.NOTIFICATION_INFO)
         log("Failed to update lists: Invalid Gemini API key.", xbmc.LOGERROR)
         return
 

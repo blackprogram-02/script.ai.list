@@ -24,7 +24,7 @@ class GeminiProvider:
         # Check if API key is valid
         if not self.api_key:
             log("Gemini API key is missing or invalid in the settings.", xbmc.LOGERROR)#
-            xbmcgui.Dialog().notification('Missing Gemini API key', 'Make sure to have filed in your gemini api key is the addon settings', xbmcgui.NOTIFICATION_ERROR, 5000)
+            xbmcgui.Dialog().notification('Missing Gemini API key', 'Make sure to have filed in a valid gemini api key in the addon settings', xbmcgui.NOTIFICATION_INFO, 5000)
             return
         
         # Log the model name for debugging (avoid logging sensitive API key)
