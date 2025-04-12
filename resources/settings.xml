@@ -13,6 +13,11 @@
                  desc="Manually update all lists immediately. This will fetch the latest data for all your lists." />
     </category>
 
+    <category label="General Settings">
+        <setting id="Disable_Update_Notifications" type="bool" label="Disable Update Notifications" 
+                 default="false" 
+                 desc="Toggle to disable or enable update notifications." />
+    </category>
     <!-- Account Settings -->
     <category label="Account Settings">
         <setting id="link_trakt_account" type="action" label="Link Trakt Account" 

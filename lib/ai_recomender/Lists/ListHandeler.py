@@ -2,6 +2,7 @@ import os
 import json
 import xbmc
 import xbmcgui
+import xbmcaddon
 from lib.ai_recomender.providers.gemini import GeminiProvider
 from lib.ai_recomender.promts.recommendation import RecommendationPrompt
 from lib.trakt.database import Database
@@ -15,6 +16,7 @@ class ListHandler:
         self.tmdb_api_key = tmdb_api_key
         self.lists_file = os.path.join(addon_path, "list.json")
         self.addon_path = addon_path
+        self.addon = xbmcaddon.Addon()
         self.lists = self.load_lists()
         self.gemini = GeminiProvider()
         self.user_data = {}
@@ -130,6 +132,9 @@ class ListHandler:
     
     def procces_all_lists(self):
         """Process all lists defined in the JSON file."""
+
+        disable_notifications = self.addon.getSetting("Disable_Update_Notifications") == "true"
+
         # fetch_all()
         INTERVAL = 60 / 14 # 14 requests per minute for the Gemini Limits
         for list_name in self.lists.keys():
@@ -144,7 +149,8 @@ class ListHandler:
                 genarted_name = data.get('list_name')
                 user_list.rename_list(list_id,genarted_name)
 
-                xbmcgui.Dialog().notification("Success", f"Successfully updated list {list_name}", xbmcgui.NOTIFICATION_INFO)
+                if not disable_notifications:
+                    xbmcgui.Dialog().notification("Success", f"Successfully updated list {list_name}", xbmcgui.NOTIFICATION_INFO)
                 log(f"Successfully updated list {list_name} with recommendations.", xbmc.LOGINFO)
             else:
                 xbmcgui.Dialog().notification("Error", f"Failed to process list {list_name}", xbmcgui.NOTIFICATION_ERROR)

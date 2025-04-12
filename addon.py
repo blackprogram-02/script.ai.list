@@ -104,7 +104,8 @@ def update_all_lists():
     with open(lock_file, "w") as f:
         f.write("Updating")
 
-    xbmcgui.Dialog().notification(addonname, "Start updating all lists", xbmcgui.NOTIFICATION_INFO)
+    if not addon.getSetting("Disable_Update_Notifications") == "true":
+        xbmcgui.Dialog().notification(addonname, "Start updating all lists", xbmcgui.NOTIFICATION_INFO)
 
     if xbmc.getCondVisibility("Window.IsActive(addonsettings)"):
         xbmcgui.Dialog().ok('Updating List', 'The lists are being updated. Based on your list count, this may take a couple of minutes.')
@@ -113,7 +114,8 @@ def update_all_lists():
         log("Updating all lists...", xbmc.LOGINFO)
         sync_trakt_account()
         ListHandler(addon_path, API_KEY, tmdb_token).procces_all_lists()
-        xbmcgui.Dialog().notification(addonname, "All lists updated successfully.", xbmcgui.NOTIFICATION_INFO)
+        if not addon.getSetting("Disable_Update_Notifications") == "true":
+            xbmcgui.Dialog().notification(addonname, "All lists updated successfully.", xbmcgui.NOTIFICATION_INFO)
         log("All lists updated successfully.", xbmc.LOGINFO)
     except Exception as e:
         xbmcgui.Dialog().notification(addonname, "Failed to update lists.", xbmcgui.NOTIFICATION_ERROR)
@@ -133,7 +135,9 @@ def sync_trakt_account():
         return
 
     trakt_manager.sync_account(db)
-    xbmcgui.Dialog().notification(addonname, "Trakt account synced successfully.", xbmcgui.NOTIFICATION_INFO)
+
+    if not addon.getSetting("Disable_Update_Notifications") == "true":
+        xbmcgui.Dialog().notification(addonname, "Trakt account synced successfully.", xbmcgui.NOTIFICATION_INFO)
     log("Trakt account synced successfully.", xbmc.LOGINFO)
 
 def list_editor():
