@@ -8,7 +8,7 @@ from lib.ai_recomender.promts.recommendation import RecommendationPrompt
 from lib.log import log
 
 class GeminiProvider:
-    def __init__(self, model_name: str = "gemini-2.0-flash-lite"):
+    def __init__(self, model_name: str = "gemini-2.0-flash"):
         """
         Initialize the Gemini provider with the API key and model name.
         
