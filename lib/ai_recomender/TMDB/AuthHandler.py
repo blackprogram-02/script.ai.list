@@ -2,7 +2,10 @@ import requests
 import xbmc
 import xbmcgui
 import xbmcvfs
+import xbmcaddon
 import os
+import urllib.parse
+from lib.gui.QRWindow import MyQRCodeWindow
 
 class AuthHandler:
     """
@@ -46,8 +49,14 @@ class AuthHandler:
     BASE_URL = "https://api.themoviedb.org/3/authentication"
     def __init__(self, api_key, addon_path):
         self.api_key = api_key
-        self.addon_path = addon_path
-        self.ACCESS_FILE = os.path.join(addon_path, "tmdb_access_token.txt")
+        self.addon = xbmcaddon.Addon()
+
+        self.addon_install_path = self.addon.getAddonInfo('path')
+        self.addon_profile_path = xbmcvfs.translatePath(self.addon.getAddonInfo('profile'))
+
+        # Calculate the expected XML file path
+        self.xml_file = os.path.join(self.addon_install_path, 'resources', 'skins', 'default', '1080i', 'MyQRCodeWindow.xml')
+        self.ACCESS_FILE = os.path.join(self.addon_profile_path, "tmdb_access_token.txt")
 
     def create_request_token(self):
         url = "https://api.themoviedb.org/4/auth/request_token"
@@ -69,17 +78,40 @@ class AuthHandler:
             return None
 
     def create_approval(self):
+        """
+        Generates TMDB approval URL, a QR code URL for it,
+        and displays them in a custom Kodi window.
+        """
+        # 1. Construct the original approval URL
         url = f"https://www.themoviedb.org/auth/access?request_token={self.request_token}"
-        short_url = self.shorten_url(url)
-        dialog = xbmcgui.Dialog()
-        dialog.ok("Approval Required", f"Please approve the request at {short_url}")
+
+        # 2. Generate the QR code image URL
+        encoded_approval_url = urllib.parse.quote(url)
+        qr_code_url = f"https://api.qrserver.com/v1/create-qr-code/?size=250x250&data={encoded_approval_url}"
+
+        # 3. Shorten the original URL for text display
+        short_display_url = self.shorten_url(url)
+
+        # 4. Display using the custom QRwindow
+        window = MyQRCodeWindow("MyQRCodeWindow.xml", self.addon_install_path, "default", "1080i",
+                                qr_code_url=qr_code_url,
+                                display_url=short_display_url,
+                                display_title="TMDB Approval Required"
+                                )
+        window.doModal()
+        del window
     
     def shorten_url(self, long_url):
         tinyurl_api = "http://tinyurl.com/api-create.php"
-        response = requests.get(tinyurl_api, params={"url": long_url})
-        if response.status_code == 200:
-            return response.text
-        else:
+        try:
+            response = requests.get(tinyurl_api, params={"url": long_url}, timeout=10) # Added timeout
+            if response.status_code == 200:
+                return response.text
+            else:
+                xbmc.log(f"[AuthHandler] TinyURL request failed: {response.status_code}", level=xbmc.LOGWARNING)
+                return long_url
+        except requests.exceptions.RequestException as e:
+            xbmc.log(f"[AuthHandler] TinyURL request exception: {e}", level=xbmc.LOGWARNING)
             return long_url
 
     def create_access_token(self):

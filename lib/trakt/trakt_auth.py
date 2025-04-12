@@ -2,8 +2,11 @@ import requests
 import xbmc
 import xbmcgui
 import xbmcvfs
+import xbmcaddon
 import os
+import urllib.parse
 from lib.log import log
+from lib.gui.QRWindow import MyQRCodeWindow
 
 class TraktAuthHandler:
     """
@@ -46,8 +49,11 @@ class TraktAuthHandler:
     def __init__(self, client_id, client_secret, addon_path):
         self.client_id = client_id
         self.client_secret = client_secret
-        self.addon_path = addon_path
-        self.ACCESS_FILE = os.path.join(addon_path, "trakt_access_token.txt")
+        self.addon = xbmcaddon.Addon()
+
+        self.addon_install_path = self.addon.getAddonInfo('path')
+        self.addon_profile_path = xbmcvfs.translatePath(self.addon.getAddonInfo('profile'))
+        self.ACCESS_FILE = os.path.join(self.addon_profile_path, "trakt_access_token.txt")
 
     def create_request_token(self):
         url = f"{self.BASE_URL}/oauth/device/code"
@@ -72,8 +78,18 @@ class TraktAuthHandler:
             return None
 
     def create_approval(self):
-        dialog = xbmcgui.Dialog()
-        dialog.ok("Approval Required", f"Please approve the request at {self.verification_url} and enter the code: {self.user_code}")
+        # 1. Generate the QR code image URL
+        encoded_approval_url = urllib.parse.quote(self.verification_url)
+        qr_code_url = f"https://api.qrserver.com/v1/create-qr-code/?size=250x250&data={encoded_approval_url}"
+
+        # 2. Display using the custom QRwindow
+        window = MyQRCodeWindow("MyQRCodeWindow.xml", self.addon_install_path, "default", "1080i",
+                        qr_code_url=qr_code_url,
+                        display_url=str(self.verification_url + ' with code: ' + self.user_code),
+                        display_title="Trakt Approval Required"
+                        )
+        window.doModal()
+        del window
         log(f"Approval requested. Verification URL: {self.verification_url}, User Code: {self.user_code}", xbmc.LOGDEBUG)
 
     def create_access_token(self):
