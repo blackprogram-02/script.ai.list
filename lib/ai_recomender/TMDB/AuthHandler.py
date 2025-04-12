@@ -6,6 +6,7 @@ import xbmcaddon
 import os
 import urllib.parse
 from lib.gui.QRWindow import MyQRCodeWindow
+from lib.gui.OKWindow import MyOkWindow
 
 class AuthHandler:
     """
@@ -74,7 +75,12 @@ class AuthHandler:
             self.request_token = response_json.get('request_token')
             return response_json.get('request_token')
         else:
-            xbmcgui.Dialog().notification("TMDB Auth", "Failed to create request token", xbmcgui.NOTIFICATION_ERROR, 5000)
+            window = MyOkWindow("MyOkWindow.xml", self.addon_install_path, "default", "1080i",
+                    display_title="Error TMDB",
+                    message=f"Failed to create request token. \n\n" + str(response_json.get('status_message'))
+                    )
+            window.doModal()
+            del window
             return None
 
     def create_approval(self):
@@ -139,12 +145,20 @@ class AuthHandler:
             with open(self.ACCESS_FILE, 'w') as token_file:
                 token_file.write(access_token)
                 xbmc.log("Access token saved to disk", xbmc.LOGINFO)
-                dialog = xbmcgui.Dialog()
-                dialog.ok("TMDB Auth", "Access token created and saved successfully")
+                window = MyOkWindow("MyOkWindow.xml", self.addon_install_path, "default", "1080i",
+                    display_title="Succefully Linked TMDB",
+                    message="Your TMDB Acoount has been linked to the addon!"
+                    )
+                window.doModal()
+                del window
             return access_token
         else:
-            dialog = xbmcgui.Dialog()
-            dialog.ok("TMDB Auth", f"Failed to create access token")
+            window = MyOkWindow("MyOkWindow.xml", self.addon_install_path, "default", "1080i",
+                                display_title="Failed linking TMDB",
+                                message=f"Something went wrong. Please try again. \n\n" + str(response_json.get('status_message'))
+                                )
+            window.doModal()
+            del window
             return None
     
     def load_access_token(self):

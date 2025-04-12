@@ -7,6 +7,7 @@ import os
 import urllib.parse
 from lib.log import log
 from lib.gui.QRWindow import MyQRCodeWindow
+from lib.gui.OKWindow import MyOkWindow
 
 class TraktAuthHandler:
     """
@@ -73,7 +74,13 @@ class TraktAuthHandler:
             log(f"Device Code: {self.device_code}, User Code: {self.user_code}, Verification URL: {self.verification_url}", xbmc.LOGDEBUG)
             return self.device_code
         else:
-            xbmcgui.Dialog().notification("Trakt Auth", "Failed to create request token", xbmcgui.NOTIFICATION_ERROR, 5000)
+            window = MyOkWindow("MyOkWindow.xml", self.addon_install_path, "default", "1080i",
+                    display_title="Error Trakt",
+                    message=f"Failed to create request token. \n\n" + str(response_json.get('status_message'))
+                    )
+            window.doModal()
+            del window
+            
             log(f"Failed to create request token. Response: {response.text}", xbmc.LOGERROR)
             return None
 
@@ -103,7 +110,8 @@ class TraktAuthHandler:
             "Content-Type": "application/json"
         }
         response = requests.post(url, json=payload, headers=headers)
-        response_json = response.json()
+        if response:
+            response_json = response.json()
         if response.status_code == 200:
             access_token = response_json.get('access_token')
             self.access_token = access_token
@@ -114,13 +122,22 @@ class TraktAuthHandler:
             with open(self.ACCESS_FILE, 'w') as token_file:
                 token_file.write(access_token)
                 log("Access token saved to disk.", xbmc.LOGINFO)
-                dialog = xbmcgui.Dialog()
-                dialog.ok("Trakt Auth", "Access token created and saved successfully")
+                window = MyOkWindow("MyOkWindow.xml", self.addon_install_path, "default", "1080i",
+                    display_title="Succefully Linked Trakt",
+                    message="Your Trakt Acoount has been linked to the addon!\nAccess token has been saved successfully."
+                    )
+                window.doModal()
+                del window
             return access_token
         else:
-            dialog = xbmcgui.Dialog()
-            dialog.ok("Trakt Auth", f"Failed to create access token")
-            log(f"Failed to create access token. Response: {response.text}", xbmc.LOGERROR)
+            window = MyOkWindow("MyOkWindow.xml", self.addon_install_path, "default", "1080i",
+                                display_title="Failed linking Trakt",
+                                message=f"Something went wrong. Please try again.\n\n Failed to create access token."
+                                )
+            window.doModal()
+            del window
+            
+            log(f"Failed to create access token.", xbmc.LOGERROR)
             return None
     
     def load_access_token(self):

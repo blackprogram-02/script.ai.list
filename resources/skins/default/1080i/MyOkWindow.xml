@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <defaultcontrol always="true">9000</defaultcontrol> <coordinates>
+        <system>1</system>
+        <posx>410</posx> <posy>200</posy> </coordinates>
+    <controls>
+        <control type="image">
+            <posx>0</posx>
+            <posy>-50</posy>
+            <width>1100</width>
+            <height>780</height>
+            <texture border="40">dialogs/default/bg.png</texture> </control>
+
+        <control type="label" id="100">
+            <description>Header Label</description>
+            <posx>40</posx>
+            <posy>40</posy>
+            <width>1020</width>
+            <height>40</height>
+            <font>font13_title</font>
+            <label>$INFO[Window.Property(display_title)]</label>
+            <textcolor>blue</textcolor> <align>center</align>
+        </control>
+
+        <control type="label" id="101">
+            <description>URL display Label</description>
+            <posx>40</posx>
+            <posy>100</posy>
+            <width>1020</width>
+            <height>120</height> <font>font12</font>
+            <label>[CR]$INFO[Window.Property(message)]</label> <textcolor>white</textcolor>
+            <align>center</align>
+            <wrapmultiline>true</wrapmultiline>
+            <multiline>true</multiline>
+        </control>
+
+        <control type="button" id="9000">
+            <description>Close Button</description>
+            <posx>450</posx> <posy>580</posy>
+            <width>200</width>
+            <height>60</height>
+            <label>Ok</label>
+            <font>font12_title</font>
+            <textcolor>white</textcolor>
+            <focusedcolor>blue</focusedcolor>
+            <align>center</align>
+
+            <texturenofocus>dialogs/default/button_normal.png</texturenofocus>
+            <texturefocus>dialogs/default/button_focus.png</texturefocus>
+
+            <onclick>PreviousMenu</onclick> 
+        </control>
+    </controls>
+</window>
