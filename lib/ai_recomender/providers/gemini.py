@@ -8,12 +8,12 @@ from lib.ai_recomender.promts.recommendation import RecommendationPrompt
 from lib.log import log
 
 class GeminiProvider:
-    def __init__(self, model_name: str = "gemini-2.0-flash-lite"):
+    def __init__(self, model_name: str = "gemini-2.5-flash"):
         """
         Initialize the Gemini provider with the API key and model name.
         
         Args:
-            model_name (str): The model name to be used (default: gemini-1.5-flash).
+            model_name (str): The model name to be used (default: gemini-2.5-flash).
         """
         # Initialize addon
         addon = xbmcaddon.Addon()
